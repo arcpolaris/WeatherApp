@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherApp", "WeatherApp\WeatherApp.csproj", "{24D8AF60-C476-48E9-A6E9-B988AF32C3D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherApp", "WeatherApp\WeatherApp.csproj", "{24D8AF60-C476-48E9-A6E9-B988AF32C3D2}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "WeatherServices", "WeatherServices\WeatherServices.pyproj", "{945A48DE-E522-4596-A407-3FD853C4BA02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,8 @@ Global
 		{24D8AF60-C476-48E9-A6E9-B988AF32C3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24D8AF60-C476-48E9-A6E9-B988AF32C3D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24D8AF60-C476-48E9-A6E9-B988AF32C3D2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{945A48DE-E522-4596-A407-3FD853C4BA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945A48DE-E522-4596-A407-3FD853C4BA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
