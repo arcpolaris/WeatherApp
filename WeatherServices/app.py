@@ -15,7 +15,9 @@ def handle_request():
     data = request.get_json()
     query = data["query"]
     if query == "point":
-        return requests.get(f"{url}/points/{data['latitude']},{data['longitude']}")
+        return requests.get(
+            f"{url}/points/{data['latitude']},{data['longitude']}"
+        ).json()
     return jsonify(data)
 
 
