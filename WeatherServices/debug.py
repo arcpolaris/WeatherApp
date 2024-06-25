@@ -1,10 +1,14 @@
-import requests
+import requests, json
 
-url = "https://weatherapp-8jw4.onrender.com/api"
+url = "https://weatherapp-8jw4.onrender.com/"
 
 
-data = {"query": "point", "latitude": "47.5430912", "longitude": "-122.0149248"}
-response = requests.post(url, json=data)
+def prettyjson(d):
+    return json.dumps(d, indent=4, sort_keys=True)
+
+
+data = {"lat": "47.5430912", "long": "-122.0149248"}
+response = requests.post(url + "map", json=data)
 
 print(f"Status Code: {response.status_code}")
-print(f"Response JSON: {response}")
+print(prettyjson(response.json()))

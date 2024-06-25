@@ -1,25 +1,31 @@
-import requests
+import mercantile
+
+
+def geo2xy(lat, lon, zoom):
+    tile = mercantile.tile(lat, lon, zoom)
+    return tile.x, tile.y
+
+
+import requests, os
 from flask import Flask, request, jsonify
 
 app = Flask(__name__.split(".")[0])
 
-url = "https://api.weather.gov/"
-
-# @app.route("/")
-# def hello_world():
-#    return "Hello, World!"
+url_nws = "https://api.weather.gov"
+url_ows_map = "https://tile.openweathermap.org/map"
 
 
-@app.route("/api", methods=["POST"])
-def handle_request():
+@app.route("/point", methods=["POST"])
+def handle_point():
     data = request.get_json()
-    query = data["query"]
-    if query == "point":
-        return requests.get(
-            f"{url}/points/{data['latitude']},{data['longitude']}"
-        ).json()
+    return requests.get(f"{url_nws}/points/{data['lat']},{data['lon']}").json()
+
+
+@app.route("/map", methods=["POST"])
+def handle_map():
+    data = request.get_json()
+    x, y = geo2xy(data["lat"], data["lon"], 8)
+    return requests.get(
+        f"{url_ows_map}/radar/8/{x}/{y}/.png?appid={os.environ[OPEN_WEATHER_KEY]}"
+    ).json()
     return jsonify(data)
-
-
-# if __name__ == "__main__":
-#    app.run(debug=True)
