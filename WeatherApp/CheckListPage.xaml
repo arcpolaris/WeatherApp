@@ -3,14 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeatherApp.CheckListPage"
              Title="Checklist">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Array x:Key="ItemsArray" Type="{x:Type x:String}">
+                <x:String>Backpack</x:String>
+                <x:String>Batteries</x:String>
+                <x:String>Flashlight</x:String>
+                <x:String>First Aid Kit</x:String>
+                <x:String>Non-perishable Food</x:String>
+                <x:String>Water (At Least a Gallon per Person)</x:String>
+                <x:String>Paper and Writing Implements</x:String>
+                <x:String>Whistle</x:String>
+                <x:String>Paper Towels</x:String>
+                <x:String>Tissues</x:String>
+                <x:String>Toilet Paper</x:String>
+                <x:String>NOAA Radio</x:String>
+                <x:String>Fire Extinguisher</x:String>
+                <x:String>Non-electronic Entertainment</x:String>
+            </x:Array>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
             <Label
-                Text="Hello, Tabs!"
+                Text="FEMA Emergency Supply Checklist"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
+            <ListView ItemsSource="{StaticResource ItemsArray}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                                <CheckBox VerticalOptions="Center" />
+                                <Label Text="{Binding}" VerticalOptions="Center" Padding="10,0,0,0"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
