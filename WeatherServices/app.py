@@ -26,6 +26,6 @@ def handle_map():
     data = request.get_json()
     x, y = geo2xy(float(data["lat"]), float(data["lon"]), 8)
     return requests.get(
-        f"{url_ows_map}/radar/8/{x}/{y}/.png?appid={os.environ[OPEN_WEATHER_KEY]}"
+        f"{url_ows_map}/radar/8/{x}/{y}/.png?appid={os.environ.get('OPEN_WEATHER_KEY')}"
     ).json()
     return jsonify(data)
