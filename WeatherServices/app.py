@@ -1,30 +1,12 @@
-import mercantile
-
-
-def geo2xy(lat, lon, zoom):
-    tile = mercantile.tile(lat, lon, zoom)
-    return tile.x, tile.y
-
-
-import requests, os
+import requests
 from flask import Flask, request, jsonify
 
 app = Flask(__name__.split(".")[0])
 
-url_nws = "https://api.weather.gov"
-url_ows_map = "https://tile.openweathermap.org/map"
+url = "https://api.weather.gov"
 
 
-@app.route("/point", methods=["POST"])
-def handle_point():
+@app.route("/alerts", methods=["POST"])
+def handle_alerts():
     data = request.get_json()
-    return requests.get(f"{url_nws}/points/{data['lat']},{data['lon']}").json()
-
-
-@app.route("/map", methods=["POST"])
-def handle_map():
-    data = request.get_json()
-    x, y = geo2xy(float(data["lat"]), float(data["lon"]), 8)
-    return requests.get(
-        f"{url_ows_map}/temp_new/8/{x}/{y}/.png?appid={os.environ.get('OPEN_WEATHER_KEY')}"
-    ).json()
+    return requests.get(f"{url}/alerts/active?area=WI").json()
