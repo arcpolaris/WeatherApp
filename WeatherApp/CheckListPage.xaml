@@ -17,9 +17,10 @@
                 <x:String>Paper Towels</x:String>
                 <x:String>Tissues</x:String>
                 <x:String>Toilet Paper</x:String>
-                <x:String>NOAA Radio</x:String>
+                <x:String>Battery Powered NOAA Radio</x:String>
                 <x:String>Fire Extinguisher</x:String>
                 <x:String>Non-electronic Entertainment</x:String>
+                <x:String>Mechanical Cell Phone Charger</x:String>
             </x:Array>
         </ResourceDictionary>
     </ContentPage.Resources>
