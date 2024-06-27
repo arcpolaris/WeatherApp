@@ -21,8 +21,8 @@ def geocode(text):
     headers = CIDict()
     headers["Accept"] = "application/json"
     response = requests.get(url, headers=headers).json()
-    features = response["features"][0]
-    return features["lat"], features["lon"]
+    properties = response["features"][0]["properties"]
+    return properties["lat"], properties["lon"]
 
 
 # Convert lat/long to a grid point
