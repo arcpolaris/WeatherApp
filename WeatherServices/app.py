@@ -14,12 +14,7 @@ def filter_alerts(alerts):
         ends = alert["properties"].get("ends")
         if ends:
             try:
-                if (
-                    datetime.fromisoformat(ends.replace(":", "", 1)).replace(
-                        tzinfo=timezone.utc
-                    )
-                    > now
-                ):
+                if datetime.fromisoformat(ends[:-1]).replace(tzinfo=timezone.utc) > now:
                     filtered_alerts.append(alert)
             except ValueError:
                 continue
@@ -35,7 +30,11 @@ def is_alert_relevant(alert, grid_id, grid_x, grid_y):
 
 @app.route("/alerts", methods=["GET", "POST"])
 def handle_alerts():
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        data = None
+
     url = "https://api.weather.gov/alerts/active?area=WI"
     response = requests.get(url).json()["features"]
 
