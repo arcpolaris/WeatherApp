@@ -18,12 +18,33 @@ def filter_alerts(alerts):
     return filtered_alerts
 
 
+def is_alert_relevant(alert, grid_id, grid_x, grid_y):
+    for area in alert["properties"]["affectedZones"]:
+        if f"https://api.weather.gov/zones/forecast/{grid_id}" in area:
+            return True
+    return False
+
+
 @app.route("/alerts", methods=["GET", "POST"])
 def handle_alerts():
     data = request.get_json()
     url = "https://api.weather.gov/alerts/active?area=WI"
-    response = requests.get(url).json()
-    return response
+    response = requests.get(url).json()["features"]
+
+    if "now" in request.args:
+        response = filter_alerts(response)
+
+    if data:
+        grid_id = data.get("gridId")
+        grid_x = data.get("gridX")
+        grid_y = data.get("gridY")
+        response = [
+            alert
+            for alert in response
+            if is_alert_relevant(alert, grid_id, grid_x, grid_y)
+        ]
+
+    return jsonify(response)
 
 
 # Convert address to lat/long
