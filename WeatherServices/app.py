@@ -127,7 +127,7 @@ def filter_alerts(alerts):
     for alert in alerts:
         ends = alert["properties"].get("ends")
         if ends:
-            if datetime.fromisoformat(ends[:-1]).replace(tzinfo=timezone.utc) > now:
+            if datetime.fromisoformat(ends).replace(tzinfo=timezone.utc) > now:
                 filtered_alerts.append(alert)
         else:
             filtered_alerts.append(alert)
