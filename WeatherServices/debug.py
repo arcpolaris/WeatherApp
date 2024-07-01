@@ -13,3 +13,9 @@ response = requests.post(f"{url}/grid", json=data)
 
 print(f"Status Code: {response.status_code}")
 print(prettyjson(response.json()))
+del data, response
+
+response = requests.get(f"{url}/alerts?now")
+
+print(f"Status Code: {response.status_code}")
+print(prettyjson(response.json()))

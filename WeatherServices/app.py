@@ -1,17 +1,34 @@
 import requests
 from requests.structures import CaseInsensitiveDict as CIDict
+from datetime import datetime, timezone
 from os import environ as env
 from flask import Flask, request, jsonify
 
 app = Flask(__name__.split(".")[0])
 
 
+# Filter out inactive alerts
+def filter_alerts(alerts):
+    now = datetime.now(timezone.utc)
+    filtered_alerts = [
+        alert
+        for alert in alerts
+        if datetime.fromisoformat(alert["properties"]["ends"][:-1]).replace(
+            tzinfo=timezone.utc
+        )
+        > now
+    ]
+    return filtered_alerts
+
+
 # Get all alerts in Wisconsin
-@app.route("/alerts", methods=["POST"])
+@app.route("/alerts", methods=["GET", "POST"])
 def handle_alerts():
     data = request.get_json()
     url = "https://api.weather.gov/alerts/active?area=WI"
-    response = requests.get(url).json()
+    response = requests.get(url).json()["features"]
+    if "now" in request.args:
+        response = filter_alerts(response)
     return response
 
 
