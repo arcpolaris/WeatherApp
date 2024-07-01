@@ -13,44 +13,37 @@ def filter_alerts(alerts):
     for alert in alerts:
         ends = alert["properties"].get("ends")
         if ends:
-            try:
-                if datetime.fromisoformat(ends[:-1]).replace(tzinfo=timezone.utc) > now:
-                    filtered_alerts.append(alert)
-            except ValueError:
-                continue
+            if datetime.fromisoformat(ends[:-1]).replace(tzinfo=timezone.utc) > now:
+                filtered_alerts.append(alert)
+        else:
+            filtered_alerts.append(alert)
     return filtered_alerts
 
 
-def is_alert_relevant(alert, grid_id, grid_x, grid_y):
-    for area in alert["properties"]["affectedZones"]:
-        if f"https://api.weather.gov/zones/forecast/{grid_id}" in area:
-            return True
-    return False
+# Gets a property of a point
+def point_property(lat, long, key):
+    url = f"https://api.weather.gov/points/{lat},{long}"
+    response = requests.get(url).json()
+    return response["properties"][key]
 
 
-@app.route("/alerts", methods=["GET", "POST"])
+@app.route("/alerts", methods=["POST"])
 def handle_alerts():
-    try:
-        data = request.get_json()
-    except:
-        data = None
-
+    data = request.get_json()
     url = "https://api.weather.gov/alerts/active?area=WI"
     response = requests.get(url).json()["features"]
-
     if "now" in request.args:
         response = filter_alerts(response)
-
-    if data:
-        grid_id = data.get("gridId")
-        grid_x = data.get("gridX")
-        grid_y = data.get("gridY")
+    if "address" in request.args:
+        lat, long = geocode(request.args["address"])
+        zone = point_property(request.args["lat"], request.args["long"], "county")
         response = [
-            alert
-            for alert in response
-            if is_alert_relevant(alert, grid_id, grid_x, grid_y)
+            i
+            for i in response
+            if i.get("properties")
+            and i["properties"].get("affectedZones")
+            and zone in i["properties"]["affectedZones"]
         ]
-
     return jsonify(response)
 
 
@@ -62,6 +55,14 @@ def geocode(text):
     response = requests.get(url, headers=headers).json()
     properties = response["features"][0]["properties"]
     return properties["lat"], properties["lon"]
+
+
+@app.route("geocode", methods=["POST"])
+def handle_geocode():
+    data = request.get_json()
+    addr = data["address"]
+    lat, long = geocode(addr)
+    return jsonify({"lat": lat, "long": long})
 
 
 # Convert lat/long to a grid point
