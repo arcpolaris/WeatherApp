@@ -1,18 +1,31 @@
 import requests
 from requests.structures import CaseInsensitiveDict as CIDict
+from datetime import datetime, timezone
 from os import environ as env
 from flask import Flask, request, jsonify
 
 app = Flask(__name__.split(".")[0])
 
 
-# Get all alerts in Wisconsin
+def filter_alerts(alerts):
+    now = datetime.now(timezone.utc)
+    filtered_alerts = []
+    for alert in alerts:
+        ends = alert["properties"].get("ends")
+        if ends:
+            if datetime.fromisoformat(ends[:-1]).replace(tzinfo=timezone.utc) > now:
+                filtered_alerts.append(alert)
+    return filtered_alerts
+
+
 @app.route("/alerts", methods=["POST"])
 def handle_alerts():
     data = request.get_json()
     url = "https://api.weather.gov/alerts/active?area=WI"
-    response = requests.get(url).json()
-    return response
+    response = requests.get(url).json()["features"]
+    if "now" in request.args:
+        response = filter_alerts(response)
+    return jsonify(response)
 
 
 # Convert address to lat/long
