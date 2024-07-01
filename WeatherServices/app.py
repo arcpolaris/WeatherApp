@@ -24,7 +24,7 @@ def geocode(text):
     return properties["lat"], properties["lon"]
 
 
-@app.route("geocode", methods=["POST"])
+@app.route("/geocode", methods=["POST"])
 def handle_geocode():
     data = request.get_json()
     addr = data["address"]
