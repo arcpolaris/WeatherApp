@@ -18,14 +18,12 @@ def filter_alerts(alerts):
     return filtered_alerts
 
 
-@app.route("/alerts", methods=["POST"])
+@app.route("/alerts", methods=["GET", "POST"])
 def handle_alerts():
     data = request.get_json()
     url = "https://api.weather.gov/alerts/active?area=WI"
-    response = requests.get(url).json()["features"]
-    if "now" in request.args:
-        response = filter_alerts(response)
-    return jsonify(response)
+    response = requests.get(url).json()
+    return response
 
 
 # Convert address to lat/long
