@@ -33,13 +33,11 @@ public partial class CheckListPage : ContentPage
         BindingContext = this;
     }
 
-    public class CheckListItem
+    public class CheckListItem(string name)
     {
-        private readonly string _name;
+        private readonly string _name = name;
 
         private string Key => $"{GetType()}:{_name}";
-
-        public CheckListItem(string name) => _name = name;
 
         public string Name => _name;
 
