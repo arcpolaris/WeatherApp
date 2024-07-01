@@ -94,7 +94,7 @@ def handle_geo2county():
     return jsonify({"zone": geo2county(lat, long)})
 
 
-# Convert address to a grid point
+# Convert address to a county
 @app.route("/zone/addr", methods=["POST"])
 def handle_addr2county():
     data = request.get_json()
@@ -103,9 +103,9 @@ def handle_addr2county():
     return jsonify({"zone": geo2county(lat, long)})
 
 
-# Converts address or lat/long to a grid point
+# Converts address or lat/long to a county
 @app.route("/zone", methods=["POST"])
-def handle_grid():
+def handle_county():
     data = request.get_json()
     if "lat" in data and "long" in data:
         lat, long = data["lat"], data["long"]
