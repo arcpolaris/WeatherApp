@@ -4,9 +4,9 @@
              x:Class="WeatherApp.SettingsPage"
              Title="SettingsPage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Picker x:Name="countyPicker"
+                Title="Please select a county to filter by"/>
+        <Picker x:Name="cityPicker"
+                Title="Select the city you would like to be alerted about"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -63,8 +63,8 @@ namespace LocalUtilities
         public string ToJson()
         {
             Dictionary<string, object> dict = new(){
-                {"Counties", HeaderTable},
-                {"Cities", DataTable}
+                {"counties", HeaderTable},
+                {"cities", DataTable}
             };
             JsonSerializerOptions options = new()
             {

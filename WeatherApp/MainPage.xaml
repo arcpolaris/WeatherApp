@@ -5,4 +5,5 @@
             x:Class="WeatherApp.MainPage">
     <local:HomePage />
     <local:CheckListPage />
+    <local:SettingsPage />
 </TabbedPage>
