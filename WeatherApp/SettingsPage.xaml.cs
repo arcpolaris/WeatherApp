@@ -4,7 +4,7 @@ namespace WeatherApp;
 
 public partial class SettingsPage : ContentPage
 {
-	Dictionary<string, IEnumerable<string>> cityLookup;
+	Dictionary<string, List<string>>? cityLookup;
 
 	public SettingsPage()
 	{
@@ -12,8 +12,12 @@ public partial class SettingsPage : ContentPage
 
 		countyPicker.SelectedIndex = -1;
 		cityPicker.SelectedIndex = -1;
+		LoadCityLookup();
+	}
 
-		cityLookup = GenerateCityLookup().Result;
+	async void LoadCityLookup()
+	{
+		cityLookup = await GenerateCityLookup();
 		countyPicker.ItemsSource = cityLookup.Keys.ToList();
 		countyPicker.SelectedIndexChanged += CountyPicker_SelectedIndexChanged;
 		cityPicker.SelectedIndexChanged += CityPicker_SelectedIndexChanged;
@@ -29,29 +33,22 @@ public partial class SettingsPage : ContentPage
 		var picker = (Picker)sender!;
 		int selectedIndex = picker.SelectedIndex;
 		if (selectedIndex == -1) return;
-		cityPicker.ItemsSource = cityLookup[(string)picker.ItemsSource[selectedIndex]!].ToList();
+		if (cityLookup == null) return;
+		cityPicker.ItemsSource = cityLookup[(string)picker.ItemsSource[selectedIndex]!];
 	}
 
-	static async Task<JsonDocument> LoadSirenData()
+	static async Task<Dictionary<string, List<string>>> GenerateCityLookup()
 	{
 		using var stream = await FileSystem.OpenAppPackageFileAsync("SirenData.json");
-		//using var reader = new StreamReader(stream);
-
-		JsonDocument doc = await JsonDocument.ParseAsync(stream);
-		return doc;
-	}
-
-	static async Task<Dictionary<string, IEnumerable<string>>> GenerateCityLookup()
-	{
-		using var doc = await LoadSirenData();
+		using var doc = await JsonDocument.ParseAsync(stream);
 		var cityRoot = doc.RootElement.GetProperty("cities");
 		return new(
-			cityRoot.EnumerateObject()
-				.Select(property => new KeyValuePair<string, IEnumerable<string>>(
-					property.Name,
-					property.Value.EnumerateArray()
-						.Select(element => element.GetString()!)
-				))
-		);
+		cityRoot.EnumerateObject()
+			.ToDictionary(
+				property => property.Name,
+				property => property.Value.EnumerateArray()
+					.Select(element => element.GetString()!)
+					.ToList()
+			));
 	}
 }
