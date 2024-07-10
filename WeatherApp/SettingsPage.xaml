@@ -3,10 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeatherApp.SettingsPage"
              Title="Settings">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+    Padding="30,0"
+    Spacing="25">
         <Picker x:Name="countyPicker"
                 Title="Please select a county to filter by"/>
         <Picker x:Name="cityPicker"
                 Title="Select the city you would like to be alerted about"/>
+        <Button x:Name="saveButton"
+                Text="Save Settings"
+                Clicked="ApplyPrefs"
+                HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>

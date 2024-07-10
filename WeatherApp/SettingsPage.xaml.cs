@@ -10,8 +10,6 @@ public partial class SettingsPage : ContentPage
 	{
 		InitializeComponent();
 
-		countyPicker.SelectedIndex = -1;
-		cityPicker.SelectedIndex = -1;
 		LoadCityLookup();
 	}
 
@@ -20,12 +18,10 @@ public partial class SettingsPage : ContentPage
 		cityLookup = await GenerateCityLookup();
 		countyPicker.ItemsSource = cityLookup.Keys.ToList();
 		countyPicker.SelectedIndexChanged += CountyPicker_SelectedIndexChanged;
-		cityPicker.SelectedIndexChanged += CityPicker_SelectedIndexChanged;
-	}
 
-	void CityPicker_SelectedIndexChanged(object? sender, EventArgs e)
-	{
-		//throw new NotImplementedException();
+		countyPicker.SelectedIndex = Preferences.Default.Get($"{nameof(cityLookup)}:{nameof(countyPicker)}", -1);
+		CountyPicker_SelectedIndexChanged(countyPicker, EventArgs.Empty);
+		cityPicker.SelectedIndex = Preferences.Default.Get($"{nameof(cityLookup)}:{nameof(cityPicker)}", -1);
 	}
 
 	void CountyPicker_SelectedIndexChanged(object? sender, EventArgs e)
@@ -33,8 +29,36 @@ public partial class SettingsPage : ContentPage
 		var picker = (Picker)sender!;
 		int selectedIndex = picker.SelectedIndex;
 		if (selectedIndex == -1) return;
-		if (cityLookup == null) return;
+		if (cityLookup is null) return;
 		cityPicker.ItemsSource = cityLookup[(string)picker.ItemsSource[selectedIndex]!];
+		cityPicker.SelectedIndex = -1;
+	}
+
+	async void ApplyPrefs(object? sender, EventArgs e)
+	{
+		SettingState state = SettingState.Valid;
+		if (cityLookup is null) state = SettingState.Loading;
+		else if (cityPicker.SelectedIndex == -1 || countyPicker.SelectedIndex == -1) state = SettingState.Missing;
+
+		string message;
+		switch (state)
+		{
+			case SettingState.Valid:
+				Preferences.Default.Set($"{nameof(cityLookup)}:{nameof(cityPicker)}", cityPicker.SelectedIndex);
+				Preferences.Default.Set($"{nameof(cityLookup)}:{nameof(countyPicker)}", countyPicker.SelectedIndex);
+				message = "Settings saved successfully";
+				break;
+			case SettingState.Loading:
+				message = "Internal resources are still loading.";
+				break;
+			case SettingState.Missing:
+				message = "One or more fields are empty.";
+				break;
+			default:
+				message = "An unknown error occured.";
+				break;
+		}
+		await DisplayAlert(state is SettingState.Valid ? "Saved Settings" : "Could Not Save Settings", message, "Ok");
 	}
 
 	static async Task<Dictionary<string, List<string>>> GenerateCityLookup()
@@ -50,5 +74,13 @@ public partial class SettingsPage : ContentPage
 					.Select(element => element.GetString()!)
 					.ToList()
 			));
+	}
+
+	enum SettingState
+	{
+		Valid,
+		Missing,
+		Loading,
+		Invalid,
 	}
 }

@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherApp", "WeatherApp\We
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "WeatherServices", "WeatherServices\WeatherServices.pyproj", "{945A48DE-E522-4596-A407-3FD853C4BA02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalUtilities", "LocalUtilities\LocalUtilities.csproj", "{69C4EE5C-E999-48B1-8E3A-5DA2D367765F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalUtilities", "LocalUtilities\LocalUtilities.csproj", "{69C4EE5C-E999-48B1-8E3A-5DA2D367765F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D04A442A-AEA4-4DB4-A36D-98D8C9147088}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
