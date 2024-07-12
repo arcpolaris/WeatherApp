@@ -4,6 +4,7 @@ namespace WeatherApp;
 
 public partial class SettingsPage : ContentPage
 {
+	public static readonly string selectedAddress = nameof(selectedAddress);
 	Dictionary<string, List<string>>? cityLookup;
 
 	public SettingsPage()
@@ -46,7 +47,8 @@ public partial class SettingsPage : ContentPage
 			case SettingState.Valid:
 				Preferences.Default.Set($"{nameof(cityLookup)}:{nameof(cityPicker)}", cityPicker.SelectedIndex);
 				Preferences.Default.Set($"{nameof(cityLookup)}:{nameof(countyPicker)}", countyPicker.SelectedIndex);
-				message = "Settings saved successfully";
+				Preferences.Default.Set($"{nameof(selectedAddress)}", $"{cityPicker.SelectedItem}, {countyPicker.SelectedItem}, Wisconsin, USA");
+				message = "Settings saved successfully.";
 				break;
 			case SettingState.Loading:
 				message = "Internal resources are still loading.";
