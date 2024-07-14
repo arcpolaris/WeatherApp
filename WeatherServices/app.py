@@ -144,7 +144,6 @@ def handle_alerts():
     if "address" in request.args:
         lat, long = geocode(request.args["address"])
         zone = point_property(lat, long, "county")
-        print(lat, long, zone, sep="\n")
         response = [i for i in response if zone in i["properties"]["affectedZones"]]
     if "lat" in request.args and "long" in request.args:
         lat, long = request.args["lat"], request.args["long"]
