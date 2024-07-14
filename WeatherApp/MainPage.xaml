@@ -6,4 +6,5 @@
     <local:HomePage />
     <local:CheckListPage />
     <local:SettingsPage />
+    <local:MapsPage />
 </TabbedPage>
