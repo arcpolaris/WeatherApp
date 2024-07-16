@@ -19,6 +19,11 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
             <Button
+                Text="Notif Test Button"
+                Clicked="TestNotif"
+                HorizontalOptions="Fill" />
+
+            <Button
                 x:Name="ReloadBtn"
                 Text="Reload Data" 
                 Clicked="LoadAlerts"

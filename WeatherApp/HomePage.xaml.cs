@@ -1,3 +1,5 @@
+using Plugin.LocalNotification;
+
 namespace WeatherApp;
 
 public partial class HomePage : ContentPage
@@ -26,5 +28,25 @@ public partial class HomePage : ContentPage
 		{
 			AlertLabel.Text = ex.Message;
 		}
+	}
+
+	async void TestNotif(object sender, EventArgs e)
+	{
+		NotificationRequest request = new()
+		{
+			NotificationId = 1000,
+			Title = "Title",
+			Subtitle = "Subtitle",
+			Description = "Description",
+			BadgeNumber = 42,
+			Schedule = new()
+			{
+				NotifyTime = DateTime.Now.AddSeconds(3),
+				NotifyRepeatInterval = TimeSpan.FromDays(1)
+			}
+		};
+		if (!await LocalNotificationCenter.Current.AreNotificationsEnabled())
+			await LocalNotificationCenter.Current.RequestNotificationPermission();
+		await LocalNotificationCenter.Current.Show(request);
 	}
 }
