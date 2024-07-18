@@ -1,4 +1,5 @@
 import requests, secrets
+from logging import basicConfig, debug, DEBUG
 from requests.structures import CaseInsensitiveDict as CIDict
 from datetime import datetime, timezone
 from os import environ as env
@@ -8,6 +9,7 @@ from flask_socketio import SocketIO, emit
 app = Flask(__name__.split(".")[0])
 app.config["SECRET_KEY"] = secrets.token_hex(16)
 socketio = SocketIO(app)
+basicConfig(level=DEBUG)
 
 # Publishes an event to every subscribed client
 # The filtering of events will happen on
@@ -15,7 +17,7 @@ socketio = SocketIO(app)
 @app.route("/publish", methods=["POST"])
 def publish():
     data = request.get_json(force=True)
-    print(data);
+    debug(data);
     socketio.emit("alert event", data, broadcast=True)
     return f"{data}", 200
 
