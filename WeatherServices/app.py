@@ -1,11 +1,22 @@
-import requests
+import requests, secrets
 from requests.structures import CaseInsensitiveDict as CIDict
 from datetime import datetime, timezone
 from os import environ as env
 from flask import Flask, request, jsonify
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__.split(".")[0])
+app.config["SECRET_KEY"] = secrets.token_hex(16)
+socketio = SocketIO(app)
 
+# Publishes an event to every subscribed client
+# The filtering of events will happen on
+# the client side because I hate python
+@app.route("/publish", methods=["POST"])
+def publish():
+    data = request.json
+    socketio.emit("alert event", data)
+    return "", 200
 
 # Gets a property of a point
 def point_property(lat, long, key):
