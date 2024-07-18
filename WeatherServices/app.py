@@ -14,9 +14,9 @@ socketio = SocketIO(app)
 # the client side because I hate python
 @app.route("/publish", methods=["POST"])
 def publish():
-    data = request.get_json()
+    data = request.get_json(force=True)
     print(data);
-    emit("alert event", data, broadcast=True)
+    socketio.emit("alert event", data, broadcast=True)
     return f"{data}", 200
 
 # Gets a property of a point

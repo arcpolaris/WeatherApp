@@ -1,9 +1,10 @@
 ﻿namespace LocalUtilities
 {
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
+	internal class Program
+	{
+		static void Main(string[] args)
+		{
+			/*
             string sourcePath = @"C:\Users\dsrivastava\source\repos\WeatherApp\LocalUtilities\SirenData.csv";
             string dumpPath = @"C:\Users\dsrivastava\source\repos\WeatherApp\LocalUtilities\SirenData.json";
             CSVHelper csv = new(sourcePath);
@@ -15,6 +16,8 @@
             //    Console.WriteLine();
             //}
             File.WriteAllText(dumpPath, csv.ToJson());
-        }
-    }
+            */
+			SocketDebugger.TestSocket().GetAwaiter().GetResult();
+		}
+	}
 }
