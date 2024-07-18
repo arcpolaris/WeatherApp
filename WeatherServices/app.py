@@ -18,7 +18,7 @@ basicConfig(level=DEBUG)
 def publish():
     data = request.get_json(force=True)
     debug(data);
-    emit("alert event", data, broadcast=True)
+    emit("alert event", data, broadcast=True, namespace="/")
     return f"{data}", 200
 
 # Gets a property of a point
