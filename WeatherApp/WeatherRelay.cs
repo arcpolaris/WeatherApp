@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WeatherApp;
 
@@ -32,11 +33,21 @@ internal static class WeatherRelay
 		}
 		return new JsonResponse(response.StatusCode, null);
 	}
+
+	public static async Task<GenericResponse<T>> Request<T>(string endpoint, object? payload = null)
+	{
+		var response = await Request(endpoint, payload);
+		if (response.JsonDocument == null) return new(response.StatusCode, default);
+		return new(response.StatusCode, response.JsonDocument!.Deserialize<T>());
+	}
 }
 
 internal class JsonResponse(HttpStatusCode StatusCode, JsonDocument? JsonDocument) : IDisposable
 {
 	static readonly JsonSerializerOptions pretty = new() { WriteIndented = true };
+
+	public HttpStatusCode StatusCode { get; } = StatusCode;
+	public JsonDocument? JsonDocument { get; } = JsonDocument;
 
 	public void Dispose() => JsonDocument?.Dispose();
 
@@ -44,3 +55,5 @@ internal class JsonResponse(HttpStatusCode StatusCode, JsonDocument? JsonDocumen
 		StatusCode.HasFlag(HttpStatusCode.OK) ? JsonSerializer.Serialize(JsonDocument!.RootElement, pretty) : StatusCode.ToString();
 
 }
+
+internal record GenericResponse<T>(HttpStatusCode StatusCode, T? Value);

@@ -31,6 +31,31 @@
 
             <Label
                 x:Name="AlertLabel" />
+
+            <ListView ItemsSource="{Binding NWSAlerts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand"
+                                         Padding="10" Spacing="5">
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                    <Label Text="{Binding Location}" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Reporter, StringFormat='Reported by {0}'}" HorizontalOptions="End"/>
+                                </StackLayout>
+                                <Label Text="{Binding Headline}" HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Subtitle}" HorizontalOptions="CenterAndExpand"/>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                    <Label Text="{Binding Starting}" HorizontalOptions="Start"/>
+                                    <Label Text=" - " HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Stoptime}" HorizontalOptions="End"/>
+                                </StackLayout>
+                                <Label Text="{Binding Maintext}" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Instruct}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
