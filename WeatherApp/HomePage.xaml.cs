@@ -1,5 +1,6 @@
 using Plugin.LocalNotification;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 
 namespace WeatherApp;
@@ -7,13 +8,20 @@ namespace WeatherApp;
 public partial class HomePage : ContentPage
 {
 	public ObservableCollection<NWSAlert> NWSAlerts { get; set; }
+	public ObservableCollection<NotificationRequest> SirenAlerts { get; set; }
 
 	public HomePage()
 	{
 		InitializeComponent();
-
 		NWSAlerts = new();
+		SirenAlerts = new();
 		BindingContext = this;
+	}
+
+	protected override void OnAppearing()
+	{
+		App.relayService!.Notified += (sender, e) => { SirenAlerts.Add(e); };
+		base.OnAppearing();
 	}
 
 	async void LoadAlerts(object sender, EventArgs e)

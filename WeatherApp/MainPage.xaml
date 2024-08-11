@@ -7,4 +7,5 @@
     <local:CheckListPage />
     <local:SettingsPage />
     <local:MapsPage />
+    <local:EmergencyPage />
 </TabbedPage>

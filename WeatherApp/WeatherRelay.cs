@@ -1,18 +1,19 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-
+using IOSocket = SocketIOClient.SocketIO;
+using Plugin.LocalNotification;
+#if DEBUG
+using System.Diagnostics;
+#endif
 namespace WeatherApp;
 
 internal static class WeatherRelay
 {
-	static readonly string serverAddress = "https://weatherapp-8jw4.onrender.com";
+	public static readonly string serverAddress = "https://weatherapp-8jw4.onrender.com";
 	static readonly HttpClient httpClient = new() { BaseAddress = new(serverAddress) };
-	static readonly JsonSerializerOptions pretty = new() { WriteIndented = true };
 
 	public static async Task<JsonResponse> Request(string endpoint, object? payload = null)
 	{
@@ -57,3 +58,77 @@ internal class JsonResponse(HttpStatusCode StatusCode, JsonDocument? JsonDocumen
 }
 
 internal record GenericResponse<T>(HttpStatusCode StatusCode, T? Value);
+
+public sealed class WeatherRelaySocketService
+{
+	bool built;
+	IOSocket? _socket = null;
+	public IOSocket? Socket => _socket;
+
+	public static bool TryBuild(WeatherRelaySocketService service)
+	{
+		if (service.built) return false;
+		service.built = true;
+		service._socket = new(WeatherRelay.serverAddress);
+		return true;
+	}
+
+	public event EventHandler<NotificationRequest>? Notified;
+	public void Notify(NotificationRequest request) => Notified?.Invoke(this, request);
+}
+
+public partial class App
+{
+#pragma warning disable CA2211
+	public static WeatherRelaySocketService? relayService;
+#pragma warning restore CA2211
+	private readonly WeatherRelaySocketService relaySocket;
+
+	public App(WeatherRelaySocketService relaySocket) : this()
+	{
+		this.relaySocket = relaySocket;
+		relayService = relaySocket;
+	}
+
+	protected override async void OnStart()
+	{
+		base.OnStart();
+		WeatherRelaySocketService.TryBuild(relaySocket);
+		relaySocket.Socket!.OnConnected += (sender, e) =>
+		{
+#if DEBUG
+			Debug.WriteLine("Connected");
+#endif
+		};
+		relaySocket.Socket!.On("alert event", async response =>
+		{
+#if DEBUG
+			Debug.WriteLine(response.ToString());
+#endif
+			var root = response.GetValue<Dictionary<string, string>>();
+			string title, subtitle, description;
+			{ if (root.TryGetValue("title", out var value)) title = value; else return; }
+			{ if (root.TryGetValue("subtitle", out var value)) subtitle = value; else return; }
+			{ if (root.TryGetValue("description", out var value)) description = value; else return; }
+			NotificationRequest request = new()
+			{
+				NotificationId = 101,
+				Title = title,
+				Subtitle = subtitle,
+				Description = description,
+				Schedule = new()
+				{
+					NotifyTime = DateTime.Now,
+				}
+			};
+
+			relaySocket.Notify(request);
+
+			if (!await LocalNotificationCenter.Current.AreNotificationsEnabled())
+				await LocalNotificationCenter.Current.RequestNotificationPermission();
+			await LocalNotificationCenter.Current.Show(request);
+		});
+
+		await relaySocket.Socket.ConnectAsync();
+	}
+}

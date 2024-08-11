@@ -7,21 +7,12 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <Image Source="logo.png" HorizontalOptions="Center"/>
+
             <Label
-                Text="Hello, World!"
+                Text="Warn Wisconsin"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
-
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <Button
-                Text="Notif Test Button"
-                Clicked="TestNotif"
-                HorizontalOptions="Fill" />
 
             <Button
                 x:Name="ReloadBtn"
@@ -56,6 +47,23 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <ListView ItemsSource="{Binding SirenAlerts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand"
+                                         Padding="30,0" Spacing="25"
+                                         MinimumHeightRequest="50">
+                                <Label Text="{Binding Title}" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Subtitle}" HorizontalOptions="StartAndExpand"/>
+                                <Label Text="{Binding Description}" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

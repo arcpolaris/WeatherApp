@@ -2,6 +2,7 @@
 
 using SocketIOClient;
 using System.Text;
+using System.Text.Json;
 
 namespace LocalUtilities
 {
@@ -19,7 +20,7 @@ namespace LocalUtilities
 			{
 				Console.WriteLine("Holy crap theres an alert: " + response.ToString());
 			});
-
+			while (Console.ReadLine() != "start") ;
 			await client.ConnectAsync();
 			await Request();
 			Console.WriteLine("Type Quit to exit...");
@@ -29,7 +30,12 @@ namespace LocalUtilities
 
 		static async Task Request()
 		{
-			string jsonPayload = "{\"text\":\"hello world\"}";
+			string jsonPayload = JsonSerializer.Serialize(new
+			{
+				title = "Weather Alert: Theres bees",
+				subtitle = "Everywhere",
+				description = "yes everywhere. RUN"
+			});
 
 			using var client = new HttpClient();
 			var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");

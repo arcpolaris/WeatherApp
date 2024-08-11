@@ -17,7 +17,8 @@
             //}
             File.WriteAllText(dumpPath, csv.ToJson());
             */
-			SocketDebugger.TestSocket().GetAwaiter().GetResult();
+			while (true)
+				SocketDebugger.TestSocket().Wait();
 		}
 	}
 }

@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /LocalUtilities/SirenData.csv
 /LocalUtilities/SirenData.json
+/WeatherApp/Resources/Raw/Emergency Lists.pdf
