@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 import requests, secrets
 from logging import basicConfig, debug, DEBUG
 from requests.structures import CaseInsensitiveDict as CIDict
