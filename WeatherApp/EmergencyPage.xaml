@@ -3,9 +3,72 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeatherApp.EmergencyPage"
              Title="Emergency">
-    <Grid>
-        <WebView x:Name="pdfWebView"
+    <ScrollView>
+        <!--<WebView x:Name="pdfWebView"
                  HorizontalOptions="FillAndExpand"
-                 VerticalOptions="FillAndExpand" />
-    </Grid>
+                 VerticalOptions="FillAndExpand" />-->
+        <VerticalStackLayout Padding="15">
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="NOAA Weather Radio Channels for Wisconsin"
+                              TextColor="Gold"
+                              FontAttributes="Bold">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenPage}"/>
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Staying Safe During a Hailstorm" />
+            <Label Text="&#x2022; Seek shelter for individuals and cars. Even small hail can be dangerous."/>
+            <Label Text="&#x2022; Avoid sheltering under trees due to the risk of lightning strikes."/>
+            <Label Text="&#x2022; Situate yourself away from windows if in a parked car. Cover your head and eyes."/>
+            <Label Text="&#x2022; In a shelter, move back from the windows and glass doors and clse the curtians."/>
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Staying Safe During a Tornado"
+                Padding="0,20,0,0" />
+            <Label Text="&#x2022; Pay attention to alerts on your NOAA radio or other broadcasting."/>
+            <Label Text="&#x2022; Move to a basement or storm shelter."/>
+            <Label Text="&#x2022; If you can get lower than roadway level, leave your car and lie in that area."/>
+            <Label Text="&#x2022; Cover your head/neck with your arms and put materials such as a blanket over you."/>
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Staying Safe During a Flood"
+                Padding="0,20,0,0" />
+            <Label Text="&#x2022; Pay attention to alerts on your NOAA radio or other broadcasting."/>
+            <Label Text="&#x2022; Move to higher ground or a higher floor. Do not climb into a closed attic."/>
+            <Label Text="&#x2022; Evacuate if told to do so."/>
+            <Label Text="&#x2022; Never drive around barricades."/>
+            <Label Text="&#x2022; Do not walk, swim, or drive through flood waters."/>
+            <Label Text="&#x2022; Stay inside your car if it is trapped in rapidly moving water. Get on the roof if water is rising inside the car."/>
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Staying Safe During a Wildfire"
+                Padding="0,20,0,0" />
+            <Label Text="&#x2022; Pay attention to alerts on your NOAA radio or other broadcasting."/>
+            <Label Text="&#x2022; Use an N95 mask to protect yourself from smoke inhalation or close off outdoor air."/>
+            <Label Text="&#x2022; Evacuate immediately if told to do so by the authorities. Know your evacuation route."/>
+            <Label Text="&#x2022; Check with local authorities about public shelters."/>
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Staying Safe After a Weather/Outdoor Emergency"
+                Padding="0,20,0,0" />
+            <Label Text="&#x2022; Listen to your NOAA radio or other boadcasting."/>
+            <Label Text="&#x2022; Contact your heathcare services if you need medical attention."/>
+            <Label Text="&#x2022; Avoid driving except in emergencies."/>
+            <Label Text="&#x2022; Stay clear of fallen/broken utility lines."/>
+            <Label Text="&#x2022; Avoid wading in floodwater, which can be contaminated and contain dangerous debris and downed power lines."/>
+            <Label Text="&#x2022; Avoid hot ash, charred trees, smoldering debirs, and live embers after a fire."/>
+            <Label Text="&#x2022; Return home only told it is safe."/>
+            <Label Text="&#x2022; Be aware that snakes and other animals may be in your home after a flood."/>
+            <Label Text="&#x2022; Do not touch electrical equipment if it is wet or if you are standing in water. Turn off the electricicty to prevent electric shock if it safe to do so."/>
+            <Label Text="&#x2022; Wear appropriate gear during clean-up such as thick-soled shoes, long pants, face masks, and work gloves."/>
+            <Label Text="&#x2022; Document property damage with photographs,"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
