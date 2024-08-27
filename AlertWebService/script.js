@@ -31,5 +31,5 @@ document.getElementById("form").addEventListener('submit', (e) => {
             county: document.getElementById("counties").value,
             city: document.getElementById("cities").value
         })
-    })
+    }).then(() => alert("Alert Sent")).catch(() => alert("Coun't Send Alert"));
 });

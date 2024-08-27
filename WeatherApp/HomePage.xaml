@@ -52,13 +52,19 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand"
-                                         Padding="30,0" Spacing="25"
-                                         MinimumHeightRequest="50">
-                                <Label Text="{Binding Title}" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Subtitle}" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Description}" HorizontalOptions="FillAndExpand"/>
-                            </StackLayout>
+                            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                                <Label VerticalOptions="Fill" 
+                                       HorizontalOptions="CenterAndExpand" 
+                                       HorizontalTextAlignment="Center">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0}: {1}. {2}">
+                                            <Binding Path="Title" />
+                                            <Binding Path="Subtitle" />
+                                            <Binding Path="Description" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </HorizontalStackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
