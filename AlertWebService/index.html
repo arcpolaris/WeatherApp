@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Warn WI Siren Alert</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>Warn WI Siren Alert!</h1>
+    <form id="form">
+        <label for="counties">County</label>
+        <select id="counties" name="counties">
+            <option value="" disabled selected></option>
+        </select>
+
+        <label for="cities">City</label>
+        <select id="cities" name="cities">
+            <option value="" disabled selected></option>
+            <option value="">Select a county first</option>
+        </select>
+
+        <label for="alert-types">Alert Type</label>
+        <select id="alert-types" name="alert-types">
+            <option value="" disabled selected></option>
+            <option value="Test">Test</option>
+            <option value="Severe Storm: Large Hail">Severe Storm: Large Hail</option>
+            <option value="Severe Storm: High Winds">Severe Storm: High Winds</option>
+            <option value="Severe Storm: Tornado">Severe Storm: Tornado</option>
+            <option value="Flood">Flood</option>
+            <option value="Fire">Fire</option>
+            <option value="Toxic Spill">Toxic Spill</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="comment">Comment</label>
+        <input id="comment" type="text" />
+
+        <input id="submit" type="submit" />
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    padding-left: 2em;
+}
+
+form {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 5px 5px;
+    max-width: 100vh;
+}
+
+label::after {
+    padding-left: 5px;
+    content: " : ";
+    float: right;
+}
+
+#submit {
+    margin: 10px 5px 0 0;
+    justify-self: end;
+    grid-column-start: 2;
+    display: inline-block;
+}

@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /LocalUtilities/SirenData.csv
 /LocalUtilities/SirenData.json
 /WeatherApp/Resources/Raw/Emergency Lists.pdf
+/AlertWebService/json.json
+/AlertWebService/SirenData.json

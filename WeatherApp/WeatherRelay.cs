@@ -38,8 +38,9 @@ internal static class WeatherRelay
 	public static async Task<GenericResponse<T>> Request<T>(string endpoint, object? payload = null)
 	{
 		var response = await Request(endpoint, payload);
-		if (response.JsonDocument == null) return new(response.StatusCode, default);
-		return new(response.StatusCode, response.JsonDocument!.Deserialize<T>());
+		return response.JsonDocument == null
+			? new(response.StatusCode, default)
+			: new(response.StatusCode, response.JsonDocument!.Deserialize<T>());
 	}
 }
 
@@ -81,6 +82,7 @@ public partial class App
 {
 #pragma warning disable CA2211
 	public static WeatherRelaySocketService? relayService;
+	public static Predicate<Dictionary<string, string>> relayPredicate = (_) => true;
 #pragma warning restore CA2211
 	private readonly WeatherRelaySocketService relaySocket;
 
@@ -106,19 +108,24 @@ public partial class App
 			Debug.WriteLine(response.ToString());
 #endif
 			var root = response.GetValue<Dictionary<string, string>>();
+			if (!relayPredicate(root)) return;
+
 			string title, subtitle, description;
 			{ if (root.TryGetValue("title", out var value)) title = value; else return; }
 			{ if (root.TryGetValue("subtitle", out var value)) subtitle = value; else return; }
 			{ if (root.TryGetValue("description", out var value)) description = value; else return; }
+#if DEBUG
+			Debug.WriteLine("Guards passed");
+#endif
 			NotificationRequest request = new()
 			{
-				NotificationId = 101,
+				NotificationId = response.GetHashCode(),
 				Title = title,
 				Subtitle = subtitle,
 				Description = description,
 				Schedule = new()
 				{
-					NotifyTime = DateTime.Now,
+					NotifyTime = DateTime.Now.AddSeconds(3),
 				}
 			};
 
@@ -126,6 +133,9 @@ public partial class App
 
 			if (!await LocalNotificationCenter.Current.AreNotificationsEnabled())
 				await LocalNotificationCenter.Current.RequestNotificationPermission();
+#if DEBUG
+			//await LocalNotificationCenter.Current.RequestNotificationPermission();
+#endif
 			await LocalNotificationCenter.Current.Show(request);
 		});
 

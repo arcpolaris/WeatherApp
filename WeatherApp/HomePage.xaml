@@ -16,7 +16,7 @@
 
             <Button
                 x:Name="ReloadBtn"
-                Text="Reload Data" 
+                Text="Search for National Weather Service Alerts" 
                 Clicked="LoadAlerts"
                 HorizontalOptions="Fill" />
 

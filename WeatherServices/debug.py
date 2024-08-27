@@ -11,26 +11,39 @@ def prettyjson(d):
 def log(r, d):
     response = requests.post(f"{url}/{r}", json=d)
     print(f"Status Code: {response.status_code}")
-    print(prettyjson(response.json()))
+    #print(response.text)
     return response
 
 
-data = {"address": "Jefferson, Wisconsin"}
+# data = {"address": "Adams, Adams County, Wisconsin"}
 
-response = log("geocode", data)
+# response = log("geocode", data)
 
-response = requests.post(f"{url}/grid", json=data)
+# response = requests.post(f"{url}/grid", json=data)
 
-print(f"Status Code: {response.status_code}")
-print(prettyjson(response.json()))
+# print(f"Status Code: {response.status_code}")
+# print(prettyjson(response.json()))
 
-response = requests.post(f"{url}/zone", json=data)
+# response = requests.post(f"{url}/zone", json=data)
 
-print(f"Status Code: {response.status_code}")
-print(prettyjson(response.json()))
+# print(f"Status Code: {response.status_code}")
+# print(prettyjson(response.json()))
 
-data = response.json()
-response = requests.post(f"{url}/alerts?now", json=data)
+# data = response.json()
+# response = requests.post(f"{url}/alerts?now", json=data)
 
-print(f"Status Code: {response.status_code}")
-print(prettyjson(response.json()))
+# print(f"Status Code: {response.status_code}")
+# print(prettyjson(response.json()))
+
+print(" === Notification Wizard === \n\n")
+data = {"title" : input("Enter notification title...\n\n\t"),
+        "subtitle" : input("Enter notification subtitle...\n\n\t"),
+        "description" : input("Enter notification description...\n\n\t")}
+
+input(f"Payload : {data}\nPress ENTER to send...\n")
+print("\n")
+log("publish", data)
+# while True:
+#     input("Press enter to trigger an event")
+#     data = {"title": "Test Title", "subtitle": "Subtitle", "description": "Description"}
+#     log("publish", data)

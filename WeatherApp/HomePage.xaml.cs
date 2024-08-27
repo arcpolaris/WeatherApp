@@ -21,6 +21,10 @@ public partial class HomePage : ContentPage
 	protected override void OnAppearing()
 	{
 		App.relayService!.Notified += (sender, e) => { SirenAlerts.Add(e); };
+		App.relayPredicate = (dict) => dict.TryGetValue("county", out var county)
+									&& county == SettingsPage.SelectedCounty
+									&& dict.TryGetValue("city", out var city)
+									&& city == SettingsPage.SelectedCity;
 		base.OnAppearing();
 	}
 

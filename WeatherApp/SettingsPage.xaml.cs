@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace WeatherApp;
@@ -5,7 +6,11 @@ namespace WeatherApp;
 public partial class SettingsPage : ContentPage
 {
 	public static readonly string selectedAddress = nameof(selectedAddress);
-	Dictionary<string, List<string>>? cityLookup;
+	public static Dictionary<string, List<string>> CityLookup { get => (cityLookup ??= GenerateCityLookup().Result); set => cityLookup = value; }
+	static Dictionary<string, List<string>>? cityLookup;
+
+	public static string SelectedCounty => CityLookup.Keys.ToList()[Preferences.Default.Get($"{nameof(CityLookup)}:{nameof(countyPicker)}", 0)];
+	public static string SelectedCity => CityLookup[SelectedCounty][Preferences.Default.Get($"{nameof(CityLookup)}:{nameof(cityPicker)}", 0)];
 
 	public SettingsPage()
 	{
@@ -16,13 +21,13 @@ public partial class SettingsPage : ContentPage
 
 	async void LoadCityLookup()
 	{
-		cityLookup = await GenerateCityLookup();
-		countyPicker.ItemsSource = cityLookup.Keys.ToList();
+		CityLookup = await GenerateCityLookup();
+		countyPicker.ItemsSource = CityLookup.Keys.ToList();
 		countyPicker.SelectedIndexChanged += CountyPicker_SelectedIndexChanged;
 
-		countyPicker.SelectedIndex = Preferences.Default.Get($"{nameof(cityLookup)}:{nameof(countyPicker)}", -1);
+		countyPicker.SelectedIndex = Preferences.Default.Get($"{nameof(CityLookup)}:{nameof(countyPicker)}", -1);
 		CountyPicker_SelectedIndexChanged(countyPicker, EventArgs.Empty);
-		cityPicker.SelectedIndex = Preferences.Default.Get($"{nameof(cityLookup)}:{nameof(cityPicker)}", -1);
+		cityPicker.SelectedIndex = Preferences.Default.Get($"{nameof(CityLookup)}:{nameof(cityPicker)}", -1);
 	}
 
 	void CountyPicker_SelectedIndexChanged(object? sender, EventArgs e)
@@ -30,23 +35,26 @@ public partial class SettingsPage : ContentPage
 		var picker = (Picker)sender!;
 		int selectedIndex = picker.SelectedIndex;
 		if (selectedIndex == -1) return;
-		if (cityLookup is null) return;
-		cityPicker.ItemsSource = cityLookup[(string)picker.ItemsSource[selectedIndex]!];
+		if (CityLookup is null) return;
+		cityPicker.ItemsSource = CityLookup[(string)picker.ItemsSource[selectedIndex]!];
 		cityPicker.SelectedIndex = -1;
+
+		Debug.Write(SelectedCounty);
+		Debug.Write(SelectedCity);
 	}
 
 	async void ApplyPrefs(object? sender, EventArgs e)
 	{
 		SettingState state = SettingState.Valid;
-		if (cityLookup is null) state = SettingState.Loading;
+		if (CityLookup is null) state = SettingState.Loading;
 		else if (cityPicker.SelectedIndex == -1 || countyPicker.SelectedIndex == -1) state = SettingState.Missing;
 
 		string message;
 		switch (state)
 		{
 			case SettingState.Valid:
-				Preferences.Default.Set($"{nameof(cityLookup)}:{nameof(cityPicker)}", cityPicker.SelectedIndex);
-				Preferences.Default.Set($"{nameof(cityLookup)}:{nameof(countyPicker)}", countyPicker.SelectedIndex);
+				Preferences.Default.Set($"{nameof(CityLookup)}:{nameof(cityPicker)}", cityPicker.SelectedIndex);
+				Preferences.Default.Set($"{nameof(CityLookup)}:{nameof(countyPicker)}", countyPicker.SelectedIndex);
 				Preferences.Default.Set($"{nameof(selectedAddress)}", $"{cityPicker.SelectedItem}, {countyPicker.SelectedItem}, Wisconsin, USA");
 				message = "Settings saved successfully.";
 				break;
