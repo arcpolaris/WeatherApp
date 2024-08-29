@@ -17,7 +17,8 @@
     });
 document.getElementById("form").addEventListener('submit', (e) => {
     e.preventDefault();
-
+    if ((window.prompt("Enter ID:")) != "admin") return;
+    if ((window.prompt("Enter Password")) != "siren123") return;
     fetch('https://weatherapp-8jw4.onrender.com/publish', {
         method: 'POST',
         mode: 'no-cors',

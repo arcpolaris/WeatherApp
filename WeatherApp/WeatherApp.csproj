@@ -57,18 +57,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Resources\Images\Gear.svg" />
+		<None Remove="Resources\Images\Home.svg" />
+		<None Remove="Resources\Images\Info.svg" />
+		<None Remove="Resources\Images\List.svg" />
 		<None Remove="Resources\Images\logo.svg" />
+		<None Remove="Resources\Images\Pin.svg" />
+		<None Remove="Resources\Images\radio_signals.jpg" />
 		<None Remove="Resources\Raw\SirenData.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.71" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.61" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
 		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
 		<PackageReference Include="SocketIOClient" Version="3.1.1" />
 		<PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,13 +83,13 @@
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="EmergencyPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="HomePage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="MapsPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
+			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="SettingsPage.xaml">
 			<Generator>MSBuild:Compile</Generator>

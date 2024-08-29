@@ -3,9 +3,9 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:WeatherApp"
             x:Class="WeatherApp.MainPage">
-    <local:HomePage />
-    <local:CheckListPage />
-    <local:SettingsPage />
-    <local:MapsPage />
-    <local:EmergencyPage />
+    <local:HomePage IconImageSource="Images/home.png"/>
+    <local:SettingsPage IconImageSource="Images/gear.png"/>
+    <local:CheckListPage IconImageSource="Images/list.png"/>
+    <local:MapsPage IconImageSource="Images/pin.png"/>
+    <local:EmergencyPage IconImageSource="Images/info.png"/>
 </TabbedPage>

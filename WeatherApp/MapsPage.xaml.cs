@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using System.Collections.ObjectModel;
 using static System.Tuple;
 
@@ -12,7 +13,8 @@ public partial class MapsPage : ContentPage
 		Create("Car Repair", "Mechanic"),
 		Create("Insurance Near Me", "Insurance Service"),
 		Create("Roofers" , "Roofers"),
-		Create("Siding Services", "Siding, Service")
+		Create("Siding Services", "Siding, Service"),
+		Create("Tree Services", "Tree Services")
 	];
 	public Command<string> MapCommand { get; set; } = new(OpenMap);
 
