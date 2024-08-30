@@ -7,7 +7,12 @@
         <!--<WebView x:Name="pdfWebView"
                  HorizontalOptions="FillAndExpand"
                  VerticalOptions="FillAndExpand" />-->
-        <VerticalStackLayout Padding="15" Spacing="5">
+        <VerticalStackLayout Padding="10" Spacing="5">
+            <Label
+                Text="Safty Information"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" 
+                Padding="0,0,0,15"/>
             <toolkit:Expander>
                 <toolkit:Expander.Header>
                     <Button Text="NOAA Weather Radio Channels for Wisconsin"/>

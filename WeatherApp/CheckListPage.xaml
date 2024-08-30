@@ -4,8 +4,8 @@
              x:Class="WeatherApp.CheckListPage">
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+            Padding="20,0"
+            Spacing="15">
             <Label
                 Text="FEMA Emergency Supply Checklist"
                 Style="{StaticResource Headline}"
@@ -14,9 +14,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                            <StackLayout Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding IsChecked}" VerticalOptions="Center" />
-                                <Label Text="{Binding Name}" VerticalOptions="Center" Padding="10,0,0,0"/>
+                                <Label Text="{Binding Name}" VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

@@ -8,10 +8,10 @@ public partial class MapsPage : ContentPage
 {
 	public ObservableCollection<Tuple<string, string>> Queries { get; set; } = [];
 	readonly static List<Tuple<string, string>> _queries = [
-		Create("Hospitals Near Me", "Hospital"),
-		Create("Vets Near Me", "Veterinarian"),
+		Create("Hospitals", "Hospital"),
+		Create("Veteranarians", "Veterinarian"),
+		Create("Insurance", "Insurance Service"),
 		Create("Car Repair", "Mechanic"),
-		Create("Insurance Near Me", "Insurance Service"),
 		Create("Roofers" , "Roofers"),
 		Create("Siding Services", "Siding, Service"),
 		Create("Tree Services", "Tree Services")

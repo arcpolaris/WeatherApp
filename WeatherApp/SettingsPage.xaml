@@ -5,6 +5,8 @@
     <VerticalStackLayout
     Padding="30,0"
     Spacing="25">
+        <Label Text="Select the Nearest County and City"
+               Style="{StaticResource Headline}"/>
         <Picker x:Name="countyPicker"
                 Title="Please select a county to filter by"/>
         <Picker x:Name="cityPicker"

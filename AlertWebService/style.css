@@ -21,7 +21,7 @@ label::after {
 
 #submit {
     margin: 10px 5px 0 0;
-    justify-self: end;
     grid-column-start: 2;
+    justify-self: end;
     display: inline-block;
 }

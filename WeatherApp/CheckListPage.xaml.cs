@@ -20,7 +20,6 @@ public partial class CheckListPage : ContentPage
             "Toilet Paper",
             "Battery Powered NOAA Radio",
             "Fire Extinguisher",
-            "Non-electronic Entertainment",
             "Mechanical Cell Phone Charger"
         ];
 

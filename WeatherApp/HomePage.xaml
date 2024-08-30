@@ -5,7 +5,7 @@
     <ScrollView>
         <VerticalStackLayout
             Padding="30,50,30,0"
-            Spacing="25">
+            Spacing="15">
             <Image Source="logo.png" HorizontalOptions="Center"/>
 
             <Label
@@ -22,52 +22,62 @@
             <Label
                 x:Name="AlertLabel" />
 
-            <ListView ItemsSource="{Binding NWSAlerts}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand"
+            <Label Text="NWS Alerts:"/>
+            <Border Stroke="{StaticResource PrimaryDark}"
+                    StrokeThickness="4"
+                    HorizontalOptions="Center">
+                <ListView ItemsSource="{Binding NWSAlerts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand"
                                          Padding="10" Spacing="5">
-                                <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-                                    <Label Text="{Binding Location}" HorizontalOptions="Start"/>
-                                    <Label Text="{Binding Reporter, StringFormat='Reported by {0}'}" HorizontalOptions="End"/>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                        <Label Text="{Binding Location}" HorizontalOptions="Start"/>
+                                        <Label Text="{Binding Reporter, StringFormat='Reported by {0}'}" HorizontalOptions="End"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Headline}" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Subtitle}" HorizontalOptions="CenterAndExpand"/>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                        <Label Text="{Binding Starting}" HorizontalOptions="Start"/>
+                                        <Label Text=" - " HorizontalOptions="Center"/>
+                                        <Label Text="{Binding Stoptime}" HorizontalOptions="End"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Maintext}" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="{Binding Instruct}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand"/>
                                 </StackLayout>
-                                <Label Text="{Binding Headline}" HorizontalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Subtitle}" HorizontalOptions="CenterAndExpand"/>
-                                <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-                                    <Label Text="{Binding Starting}" HorizontalOptions="Start"/>
-                                    <Label Text=" - " HorizontalOptions="Center"/>
-                                    <Label Text="{Binding Stoptime}" HorizontalOptions="End"/>
-                                </StackLayout>
-                                <Label Text="{Binding Maintext}" HorizontalOptions="StartAndExpand"/>
-                                <Label Text="{Binding Instruct}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
 
-            <ListView ItemsSource="{Binding SirenAlerts}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                                <Label VerticalOptions="Fill" 
+            <Label Text="Siren Alerts"/>
+            <Border Stroke="{StaticResource PrimaryDark}"
+                    StrokeThickness="4"
+                    HorizontalOptions="Center">
+                <ListView ItemsSource="{Binding SirenAlerts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                                    <Label VerticalOptions="Fill" 
                                        HorizontalOptions="CenterAndExpand" 
                                        HorizontalTextAlignment="Center">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}{0}: {1}. {2}">
-                                            <Binding Path="Title" />
-                                            <Binding Path="Subtitle" />
-                                            <Binding Path="Description" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                            </HorizontalStackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}: {1}. {2}">
+                                                <Binding Path="Title" />
+                                                <Binding Path="Subtitle" />
+                                                <Binding Path="Description" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </HorizontalStackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
