@@ -156,11 +156,16 @@ def handle_alerts():
     data = request.get_json()
     url = "https://api.weather.gov/alerts/active?area=WI"
     response = requests.get(url).json()["features"]
+    debug(response)
+    debug(request.args)
     if "now" in request.args:
         response = filter_alerts(response)
     if "address" in request.args:
         lat, long = geocode(request.args["address"])
+        debug(lat)
+        debug(long)
         zone = point_property(lat, long, "county")
+        debug(zone)
         response = [i for i in response if zone in i["properties"]["affectedZones"]]
     if "lat" in request.args and "long" in request.args:
         lat, long = request.args["lat"], request.args["long"]

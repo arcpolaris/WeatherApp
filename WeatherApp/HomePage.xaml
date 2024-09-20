@@ -4,7 +4,7 @@
              x:Class="WeatherApp.HomePage">
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,50,30,0"
+            Padding="30,30,30,0"
             Spacing="15">
             <Image Source="logo.png" HorizontalOptions="Center"/>
 

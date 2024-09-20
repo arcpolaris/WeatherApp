@@ -9,7 +9,7 @@ public partial class MapsPage : ContentPage
 	public ObservableCollection<Tuple<string, string>> Queries { get; set; } = [];
 	readonly static List<Tuple<string, string>> _queries = [
 		Create("Hospitals", "Hospital"),
-		Create("Veteranarians", "Veterinarian"),
+		Create("Veterinarians", "Veterinarian"),
 		Create("Insurance", "Insurance Service"),
 		Create("Car Repair", "Mechanic"),
 		Create("Roofers" , "Roofers"),

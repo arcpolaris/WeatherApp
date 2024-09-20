@@ -15,5 +15,6 @@
                 Text="Save Settings"
                 Clicked="ApplyPrefs"
                 HorizontalOptions="Center"/>
+        <Label Text="Note that if your city is not listed, it may not have emergency sirens."/>
     </VerticalStackLayout>
 </ContentPage>

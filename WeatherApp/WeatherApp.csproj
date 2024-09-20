@@ -98,7 +98,7 @@
 
 	<ProjectExtensions>
 		<VisualStudio>
-			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionWeatherAppHideInfoBar="True" />
+			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionWeatherAppHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarWeatherAppHideInfoBar="True" />
 		</VisualStudio>
 	</ProjectExtensions>
 

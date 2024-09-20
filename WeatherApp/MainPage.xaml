@@ -6,6 +6,6 @@
     <local:HomePage IconImageSource="Images/home.png"/>
     <local:SettingsPage IconImageSource="Images/gear.png"/>
     <local:CheckListPage IconImageSource="Images/list.png"/>
-    <local:MapsPage IconImageSource="Images/pin.png"/>
     <local:EmergencyPage IconImageSource="Images/info.png"/>
+    <local:MapsPage IconImageSource="Images/pin.png"/>
 </TabbedPage>

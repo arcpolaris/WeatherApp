@@ -9,7 +9,7 @@
                  VerticalOptions="FillAndExpand" />-->
         <VerticalStackLayout Padding="10" Spacing="5">
             <Label
-                Text="Safty Information"
+                Text="Safety Information"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" 
                 Padding="0,0,0,15"/>
@@ -28,7 +28,7 @@
                     <Label Text="&#x2022; Seek shelter for individuals and cars. Even small hail can be dangerous."/>
                     <Label Text="&#x2022; Avoid sheltering under trees due to the risk of lightning strikes."/>
                     <Label Text="&#x2022; Situate yourself away from windows if in a parked car. Cover your head and eyes."/>
-                    <Label Text="&#x2022; In a shelter, move back from the windows and glass doors and clse the curtians."/>
+                    <Label Text="&#x2022; In a shelter, move back from the windows and glass doors and close the curtians."/>
                 </VerticalStackLayout>
             </toolkit:Expander>
             <toolkit:Expander>
