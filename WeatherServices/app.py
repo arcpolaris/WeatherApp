@@ -166,7 +166,7 @@ def handle_alerts():
         debug(long)
         zone = point_property(lat, long, "county")
         debug(zone)
-        response = [i for i in response if zone in i["properties"]["affectedZones"]]
+        response = [i for i in response if zone.replace("C", "Z").replace("county", "forecast") in i["properties"]["affectedZones"]]
     if "lat" in request.args and "long" in request.args:
         lat, long = request.args["lat"], request.args["long"]
         zone = point_property(lat, long, "county")
